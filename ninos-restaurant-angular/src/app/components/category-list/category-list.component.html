@@ -1,0 +1,13 @@
+<ul>
+  <li routerLinkActive="active"><a routerLink="/order"><i class="bx bx-home"></i> <span>Home</span></a></li>
+
+  <li *ngFor="let temp of categories" routerLinkActive="active">
+    <a routerLink="/category/{{temp.id}}" >
+     <i class="{{temp.categoryLogo}}"></i> <span>{{temp.categoryName}}</span>
+    </a>
+  </li>
+
+  <!-- <li><a href="#about"><i class="fas fa-hamburger"></i> <span>Hamburguer</span></a></li>
+  <li><a href="#resume"><i class="fas fa-cocktail"></i> <span>Cold Drinks</span></a></li>
+  <li><a href="#portfolio"><i class="fas fa-mug-hot"></i> Hot Drinks</a></li> -->
+</ul>

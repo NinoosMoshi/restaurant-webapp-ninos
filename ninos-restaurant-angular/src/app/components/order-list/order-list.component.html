@@ -1,0 +1,51 @@
+<div class="row">
+<div *ngFor="let temp of orders" class="col-md-4 myorder">
+  <div class="card">
+   <a routerLink="/order/{{temp.id}}">
+    <img src="{{temp.image}}" alt="" style="width:100%">
+  </a>
+  <a routerLink="/order/{{temp.id}}">
+    <h1>{{temp.orderName}}</h1>
+  </a>
+    <p class="price">{{temp.price | currency:'USD'}}</p>
+    <p class="dis">{{temp.description}}</p>
+    <button (click)="addToCart(temp)" class="btn btn-primary">Add to Cart</button>
+  </div>
+</div>
+
+<div class="col-md-9 pag ">
+  <!-- pageSize: how many order-item will be in one page
+       collectionSize: the total number of orders -->
+ <ngb-pagination
+    [(page)]="page"
+    [pageSize]="pageLength"
+    [collectionSize]="orderSize"
+    [maxSize]=2
+    [boundaryLinks]="true"
+    (pageChange)="doing()"
+ >
+ </ngb-pagination>
+
+ <div class="sel">
+  <span class="mr-2">Page Size</span>
+  <select (change)="onPageSize($event)">
+    <option>2</option>
+    <option>5</option>
+    <option selected="true">10</option>
+    <option>20</option>
+    <option>50</option>
+  </select>
+</div>
+
+
+</div>
+
+</div>
+
+
+<div *ngIf="orders?.length == 0" class="alert alert-danger" role="alert">
+  No Orders Found
+</div>
+
+
+
