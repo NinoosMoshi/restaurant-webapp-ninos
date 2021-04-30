@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -44,7 +45,7 @@ public class RequestOrder {
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestOrder")
-    private Set<Item> items;
+    private Set<Item> items = new HashSet<>();
 
 
     @ManyToOne
@@ -54,12 +55,12 @@ public class RequestOrder {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "to_address_id", referencedColumnName = "id")
-    private Address toAddress;
+    private Address toAddress = new Address();
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "from_address_id", referencedColumnName = "id")
-    private Address fromAddress;
+    private Address fromAddress = new Address();
 
 
 }

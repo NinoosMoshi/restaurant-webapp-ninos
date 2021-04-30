@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -29,7 +30,7 @@ public class Client {
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
-    private Set<RequestOrder> requestOrders;
+    private Set<RequestOrder> requestOrders = new HashSet<>();
 
 
 
