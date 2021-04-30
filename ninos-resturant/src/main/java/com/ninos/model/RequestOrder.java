@@ -50,7 +50,7 @@ public class RequestOrder {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private Client client = new Client();
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -61,6 +61,12 @@ public class RequestOrder {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "from_address_id", referencedColumnName = "id")
     private Address fromAddress = new Address();
+
+
+    public void addItem(Item item){
+        items.add(item);
+        item.setRequestOrder(this);
+    }
 
 
 }

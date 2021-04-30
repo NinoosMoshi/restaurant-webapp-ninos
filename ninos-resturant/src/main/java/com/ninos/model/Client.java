@@ -33,6 +33,12 @@ public class Client {
     private Set<RequestOrder> requestOrders = new HashSet<>();
 
 
+    public void addRequestOrder(RequestOrder requestOrder){
+        requestOrders.add(requestOrder);
+        requestOrder.setClient(this);
+    }
+
+
 
 
 
