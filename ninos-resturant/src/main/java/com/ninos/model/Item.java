@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +31,16 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "request_order_id")
     private RequestOrder requestOrder;
+
+
+
+
+
+
+
+
+
+
 
 
 

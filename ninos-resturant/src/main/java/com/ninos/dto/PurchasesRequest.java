@@ -9,7 +9,8 @@ import lombok.Data;
 
 
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 
 @Data
 public class PurchasesRequest {
@@ -17,7 +18,7 @@ public class PurchasesRequest {
 
     private Client client;
     private RequestOrder requestOrder;
-    private Set<Item> items = new HashSet<>();
+    private List<Item> items;
     private Address fromAddress;
     private Address toAddress;
 

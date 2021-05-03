@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ public class PurchaseServiceImp implements PurchaseService{
 
 //      requestOrder.setItems(purchase.getItems());
 //      purchase.getItems().forEach(item -> item.setRequestOrder(requestOrder));
-        Set<Item> items = purchase.getItems();
+        List<Item> items = purchase.getItems();
         items.forEach(item -> requestOrder.addItem(item));
 
         requestOrder.setFromAddress(purchase.getFromAddress());
@@ -44,7 +45,6 @@ public class PurchaseServiceImp implements PurchaseService{
 //        requestOrders.add(requestOrder);
 //        purchase.getClient().setRequestOrders(requestOrders);
 //        requestOrder.setClient(purchase.getClient());
-
          purchase.getClient().addRequestOrder(requestOrder);
 
         clientRepository.save(purchase.getClient());

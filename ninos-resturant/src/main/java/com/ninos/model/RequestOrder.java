@@ -2,14 +2,15 @@ package com.ninos.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
+
 
 @Data
 @NoArgsConstructor
@@ -30,7 +31,7 @@ public class RequestOrder {
     private String note;
 
     @Column(name = "total_price")
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(name = "total_quantity")
     private int totalQuantity;
@@ -43,11 +44,11 @@ public class RequestOrder {
     @Column(name = "date_update")
     private Date dateUpdated;
 
-
+    @EqualsAndHashCode.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestOrder")
-    private Set<Item> items = new HashSet<>();
+    private List<Item> items = new ArrayList<>();
 
-
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client = new Client();
@@ -67,6 +68,20 @@ public class RequestOrder {
         items.add(item);
         item.setRequestOrder(this);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
