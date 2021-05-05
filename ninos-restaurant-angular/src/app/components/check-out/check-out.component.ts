@@ -1,3 +1,10 @@
+import { Address } from './../../model/address';
+import { PurchaseService } from './../../services/purchase.service';
+import { PurchaseRequest } from './../../model/purchase-request';
+import { CartOrder } from './../../model/cart-order';
+import { Item } from './../../model/item';
+import { RequestOrder } from './../../model/request-order';
+import { Client } from './../../model/client';
 import { CartService } from './../../services/cart.service';
 import { CountryStateService } from './../../services/country-state.service';
 import { State } from './../../model/state';
@@ -5,6 +12,7 @@ import { Country } from './../../model/country';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SpaceValidator } from 'src/app/model/space-validator';
+
 
 @Component({
   selector: 'app-check-out',
@@ -23,7 +31,8 @@ export class CheckOutComponent implements OnInit {
 
   constructor(private formChildGroup: FormBuilder,
               private countryStateService:CountryStateService,
-              private cartService: CartService) { }
+              private cartService: CartService,
+              private purchaseService:PurchaseService) { }
 
   ngOnInit(): void {
     this.myForm();
@@ -88,10 +97,55 @@ export class CheckOutComponent implements OnInit {
     if(this.checkoutParentGroup.invalid){
       this.checkoutParentGroup.markAllAsTouched();
     }else{
-      console.log(this.checkoutParentGroup.get('data').value);
-      console.log(this.checkoutParentGroup.get('fromPerson').value);
-      console.log(this.checkoutParentGroup.get('toPerson').value);
-      console.log(this.checkoutParentGroup.get('creditCard').value);
+      // console.log(this.checkoutParentGroup.get('data').value);
+      // console.log(this.checkoutParentGroup.get('fromPerson').value);
+      // console.log(this.checkoutParentGroup.get('toPerson').value);
+      // console.log(this.checkoutParentGroup.get('creditCard').value);
+      let client: Client = new Client();
+      client.fullName = this.checkoutParentGroup.controls['data'].value.fullName;
+      client.email = this.checkoutParentGroup.controls['data'].value.gmail;
+      client.phoneNumber = this.checkoutParentGroup.controls['data'].value.phone;
+
+      let fromAddress: Address = this.checkoutParentGroup.controls['fromPerson'].value;
+          fromAddress.state = fromAddress.state['stateName']
+
+
+
+      let toAddress: Address = this.checkoutParentGroup.controls['toPerson'].value;
+          toAddress.state = toAddress.state['stateName']
+
+
+      let requestOrder = new RequestOrder();
+      requestOrder.totalPrice = this.totalPrice;
+      requestOrder.totalQuantity = this.totalSize;
+      let items: Item[] = [];
+      let orders: CartOrder[] = this.cartService.orders;
+      for(let i=0; i < orders.length; i++){
+         items[i] = new Item(this.cartService.orders[i]);
+      }
+      let purchaseRequest = new PurchaseRequest();
+      purchaseRequest.client = client;
+      purchaseRequest.fromAddress = fromAddress;
+      purchaseRequest.toAddress = toAddress;
+      purchaseRequest.requestOrder = requestOrder;
+      purchaseRequest.items = items;
+      console.log("-------------------------------")
+      console.log(purchaseRequest.client)
+      console.log(purchaseRequest.fromAddress)
+      console.log(purchaseRequest.toAddress)
+      console.log(purchaseRequest.requestOrder)
+      console.log(purchaseRequest.items)
+
+
+      this.purchaseService.getOrder(purchaseRequest).subscribe({
+        next: response =>{
+          alert("OK")
+        },
+        error: error =>{
+          console.log("error is : " + error.message);
+        }
+      })
+
     }
 
   }

@@ -26,10 +26,6 @@ public class RequestOrder {
     @Column(name = "code")
     private String code;
 
-    @Lob
-    @Column(name = "note")
-    private String note;
-
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
