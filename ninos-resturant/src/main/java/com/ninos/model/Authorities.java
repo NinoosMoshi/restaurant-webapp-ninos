@@ -1,11 +1,12 @@
 package com.ninos.model;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @Getter
 @Setter
@@ -21,5 +22,8 @@ public class Authorities {
 
     @Column(name = "role_name")
     private String roleName;
+
+    @ManyToMany(mappedBy = "authorities")
+    private Set<User> users = new HashSet<>();
 
 }
