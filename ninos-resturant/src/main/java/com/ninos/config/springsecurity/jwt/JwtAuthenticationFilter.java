@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter {
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
-    public String generateToken(Authentication authResult) {   // 1- authResult holds your credential(username,password,active,...) when you login
+    private String generateToken(Authentication authResult) {   // 1- authResult holds your credential(username,password,active,...) when you login
 
         // Grab principal
         UserPrincipal principal = (UserPrincipal) authResult.getPrincipal(); // 2- put credential into principal container
