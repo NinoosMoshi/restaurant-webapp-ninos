@@ -1,7 +1,10 @@
 package com.ninos.config.springsecurity;
 
+import com.ninos.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity  // tell this configuration file has a spring security configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserService userService;
+
+    @Autowired
+    public SpringSecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -21,8 +31,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest()
-                .permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic();
     }
@@ -40,7 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());  // it's encode a password
-       // daoAuthenticationProvider.setUserDetailsService();  // setUserDetailsService has a service that responsible to retrieve data from the database
+        daoAuthenticationProvider.setUserDetailsService(userService);  // setUserDetailsService has a service that responsible to retrieve data from the database
         return daoAuthenticationProvider;
     }
 
