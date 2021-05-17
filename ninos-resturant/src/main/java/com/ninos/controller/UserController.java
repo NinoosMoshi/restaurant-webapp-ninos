@@ -20,7 +20,7 @@ public class UserController {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public String logIn(@RequestBody JwtLogin jwtLogin){
       return jwtAuthenticationFilter.login(jwtLogin);
     }

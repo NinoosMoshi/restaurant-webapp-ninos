@@ -18,8 +18,8 @@ import java.io.IOException;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
-public class JwtAuthorizationFilter  {
-   /* private UserRepository userRepository;
+public class JwtAuthorizationFilter extends BasicAuthenticationFilter  {
+    private UserRepository userRepository;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         super(authenticationManager);
@@ -52,21 +52,21 @@ public class JwtAuthorizationFilter  {
 
         if (token != null) {
             // parse the token and validate it
-            String userName = JWT.require(HMAC512(JwtProperties.SECRET.getBytes()))
+            String email = JWT.require(HMAC512(JwtProperties.SECRET.getBytes()))
                     .build()
                     .verify(token)
                     .getSubject();
 
             // Search in the DB if we find the user by token subject (username)
             // If so, then grab user details and create spring auth token using username, pass, authorities/roles
-            if (userName != null) {
-                User user = userRepository.findByUsername(userName);
+            if (email != null) {
+                User user = userRepository.findUserByEmail(email);
                 UserPrincipal principal = new UserPrincipal(user);
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userName, null, principal.getAuthorities());
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(email,null ,principal.getAuthorities());
                 return auth;
             }
             return null;
         }
         return null;
-    }*/
+    }
 }

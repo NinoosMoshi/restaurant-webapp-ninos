@@ -1,5 +1,7 @@
 package com.ninos.config.springsecurity;
 
+import com.ninos.config.springsecurity.jwt.JwtAuthorizationFilter;
+import com.ninos.repository.UserRepository;
 import com.ninos.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,11 +23,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
-    public SpringSecurityConfig(UserService userService) {
+    public SpringSecurityConfig(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
+
+
+
 
 
     @Override
@@ -32,9 +40,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),userRepository))
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/signin").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
