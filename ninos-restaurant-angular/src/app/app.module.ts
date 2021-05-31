@@ -15,6 +15,7 @@ import { CheckOutComponent } from './components/check-out/check-out.component';
 import { PurchasesComponent } from './components/purchases/purchases.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 
 
@@ -30,6 +31,7 @@ import { LoginComponent } from './components/login/login.component';
     CheckOutComponent,
     PurchasesComponent,
     LoginComponent,
+    SignupComponent,
 
   ],
   imports: [

@@ -1,3 +1,4 @@
+import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { PurchasesComponent } from './components/purchases/purchases.component';
@@ -9,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 
   {path:'login', component:LoginComponent},
+  {path:'signup', component:SignupComponent},
   {path:'checkout', component:CheckOutComponent},
   {path:'purchases', component:PurchasesComponent},
   {path:'category/:id', component: OrderListComponent},
