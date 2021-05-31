@@ -1,7 +1,6 @@
 package com.ninos.controller;
 
-import com.ninos.config.springsecurity.jwt.JwtAuthenticationFilter;
-import com.ninos.config.springsecurity.jwt.JwtAuthorizationFilter;
+import com.ninos.service.TokenService;
 import com.ninos.dto.JwtLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class UserController {
 
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private TokenService tokenService;
 
     @Autowired
-    public UserController(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    public UserController(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/signin")
     public String logIn(@RequestBody JwtLogin jwtLogin){
-      return jwtAuthenticationFilter.login(jwtLogin);
+      return tokenService.login(jwtLogin);
     }
 
 

@@ -1,6 +1,7 @@
 package com.ninos.config.springsecurity.jwt;
 
 import com.auth0.jwt.JWT;
+import com.ninos.dto.JwtProperties;
 import com.ninos.dto.UserPrincipal;
 import com.ninos.model.User;
 import com.ninos.repository.UserRepository;

@@ -1,4 +1,4 @@
-package com.ninos.config.springsecurity.jwt;
+package com.ninos.dto;
 
 public class JwtProperties {
     public static final String SECRET = "MY-NINOS-MOSHI";
