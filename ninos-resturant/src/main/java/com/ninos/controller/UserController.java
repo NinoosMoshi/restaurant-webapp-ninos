@@ -1,5 +1,6 @@
 package com.ninos.controller;
 
+import com.ninos.dto.LoginResponse;
 import com.ninos.service.TokenService;
 import com.ninos.dto.JwtLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public String logIn(@RequestBody JwtLogin jwtLogin){
+    public LoginResponse logIn(@RequestBody JwtLogin jwtLogin){
       return tokenService.login(jwtLogin);
     }
 

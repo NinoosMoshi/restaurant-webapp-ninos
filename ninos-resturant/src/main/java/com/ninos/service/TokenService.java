@@ -3,6 +3,7 @@ package com.ninos.service;
 import com.auth0.jwt.JWT;
 import com.ninos.dto.JwtLogin;
 import com.ninos.dto.JwtProperties;
+import com.ninos.dto.LoginResponse;
 import com.ninos.dto.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,12 +37,12 @@ public class TokenService {
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));  // 6- HMAC512 is type of encode and it will take a SECRET and encode it by type HMAC512
         return token;
     }
-    public String login(JwtLogin jwtLogin) {  // 1- jwtLogin contain email and password
+    public LoginResponse login(JwtLogin jwtLogin) {  // 1- jwtLogin contain email and password
         // 2-Authentication will check (email and password) from login and database
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtLogin.getEmail(),
                 jwtLogin.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate); // 3- put (email and password) that authenticated in SecurityContextHolder
         String token = generateToken(authenticate);  // 4- generateToken is a method that generate a token based on (email and password) authenticated
-        return token;  // 5- return token
+        return new LoginResponse(jwtLogin.getEmail(), token);  // 5- return email and token
     }
 }
