@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/security/authentication.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { SpaceValidator } from 'src/app/model/space-validator';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +24,14 @@ export class LoginComponent implements OnInit {
   myFormLogin(){
     this.checkoutParentGroup = this.formChildGroup.group({
       user:this.formChildGroup.group({
-        email:[''],
-        password:['']
+        email:new FormControl('',[
+          Validators.required,
+          SpaceValidator.onlyContainSpace,
+          Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')
+        ]),
+        password:new FormControl('',[
+          Validators.required
+        ])
       })
     })
   }
@@ -44,7 +51,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  get email(){
+    return this.checkoutParentGroup.get('user.email');
+  }
 
+  get password(){
+    return this.checkoutParentGroup.get('user.password');
+  }
 
 
 }
