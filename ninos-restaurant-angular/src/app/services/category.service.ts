@@ -1,5 +1,5 @@
 import { Category } from './../model/category';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,10 @@ export class CategoryService {
 
 
   getAllCategories(): Observable<Category[]>{
-    return this.http.get<Category[]>(this.baseUrl).pipe(
+    let head = new HttpHeaders({
+      Authorization: sessionStorage.getItem('token')
+    })
+    return this.http.get<Category[]>(this.baseUrl, {headers: head}).pipe(
       map(
         response => response
       )
