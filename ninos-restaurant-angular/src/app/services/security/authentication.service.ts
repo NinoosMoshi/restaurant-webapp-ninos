@@ -14,7 +14,11 @@ export class AuthenticationService {
 
  executeAuthentication(email:string, password:any): Observable<any>{
    return this.http.post<any>(`${this.baseUrl}/signin`, {email, password}).pipe(
-     map( response => response)
+     map(
+        response =>{
+          sessionStorage.setItem("token",`Bearer ${response.token}`)
+       return response
+      })
    );
  }
 

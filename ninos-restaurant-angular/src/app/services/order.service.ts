@@ -1,5 +1,5 @@
 import { Order } from './../model/order';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,7 +22,10 @@ export class OrderService {
   //  );
   // }
   getAllOrders(page, size): Observable<Order[]>{
-    return this.http.get<Order[]>(`${this.baseUrl}/allOrders?page=${page}&size=${size}`).pipe(
+    let head = new HttpHeaders({
+      Authorization: sessionStorage.getItem('token')
+    })
+    return this.http.get<Order[]>(`${this.baseUrl}/allOrders?page=${page}&size=${size}`, {headers: head}).pipe(
       map( response => response)
     );
    }
