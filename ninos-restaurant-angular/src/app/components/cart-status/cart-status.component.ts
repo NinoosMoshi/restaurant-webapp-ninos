@@ -1,3 +1,4 @@
+import { AuthenticationService } from 'src/app/services/security/authentication.service';
 import { CartService } from './../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -11,7 +12,8 @@ export class CartStatusComponent implements OnInit {
   orderSize :number = 0;
   orderPrice: number = 0;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.getCartStatus();
@@ -29,5 +31,13 @@ export class CartStatusComponent implements OnInit {
       }
     )
 }
+
+
+
+
+ isUserLogin(){
+   return this.authenticationService.isLogin();
+ }
+
 
 }
