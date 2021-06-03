@@ -15,10 +15,8 @@ export class CategoryService {
 
 
   getAllCategories(): Observable<Category[]>{
-    let head = new HttpHeaders({
-      Authorization: sessionStorage.getItem('token')
-    })
-    return this.http.get<Category[]>(this.baseUrl, {headers: head}).pipe(
+
+    return this.http.get<Category[]>(this.baseUrl).pipe(
       map(
         response => response
       )
