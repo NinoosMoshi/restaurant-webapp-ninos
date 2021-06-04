@@ -6,17 +6,19 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RouteActiveService } from './services/activated/route-active.service';
+import { LoginActiveService } from './services/activated/login-active.service';
 
 const routes: Routes = [
 
-  {path:'login', component:LoginComponent},
-  {path:'signup', component:SignupComponent},
-  {path:'checkout', component:CheckOutComponent},
-  {path:'purchases', component:PurchasesComponent},
-  {path:'category/:id', component: OrderListComponent},
-  {path:'order/:id', component:OrderDetailsComponent},
-  {path:'orders/:key', component:OrderListComponent},
-  {path:'orders', component:OrderListComponent},
+  {path:'login', component:LoginComponent, canActivate:[LoginActiveService]},
+  {path:'signup', component:SignupComponent, canActivate:[LoginActiveService]},
+  {path:'checkout', component:CheckOutComponent, canActivate:[RouteActiveService]},
+  {path:'purchases', component:PurchasesComponent, canActivate:[RouteActiveService]},
+  {path:'category/:id', component: OrderListComponent, canActivate:[RouteActiveService]},
+  {path:'order/:id', component:OrderDetailsComponent, canActivate:[RouteActiveService]},
+  {path:'orders/:key', component:OrderListComponent, canActivate:[RouteActiveService]},
+  {path:'orders', component:OrderListComponent, canActivate:[RouteActiveService]},
   {path:'', redirectTo:'/orders',pathMatch:'full'},
   {path:'**', redirectTo:'/orders',pathMatch:'full'}
 
