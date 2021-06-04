@@ -1,6 +1,7 @@
-<div class="d-flex myform">
-  <input #key (keyup)=doSearch(key.value) class="mygro form-control me-2" type="search" placeholder="Search" aria-label="Search">
-  <button (click)=doSearch(key.value) class="mygro btn btn-outline-success" type="submit">Search</button>
-  <button routerLink="/login" *ngIf="!isAuthenticatedUser()"  class="log btn btn-outline-primary" type="submit">Login</button>
-  <button (click)="logout()" *ngIf="isAuthenticatedUser()"  class="log btn btn-outline-danger" type="submit">Logout</button>
+<div *ngIf="isAuthenticatedUser()" class="d-flex myform">
+    <input #key (keyup)=doSearch(key.value) class="mygro form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button (click)=doSearch(key.value) class="mygro btn btn-outline-success" type="submit">Search</button>
 </div>
+
+<button routerLink="/login" *ngIf="!isAuthenticatedUser()"  class="log btn btn-outline-primary" type="submit">Login</button>
+<button (click)="logout()" *ngIf="isAuthenticatedUser()"  class="log btn btn-outline-danger" type="submit">Logout</button>

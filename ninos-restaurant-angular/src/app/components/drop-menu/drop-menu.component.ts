@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../services/security/authentication.service';
 import { Category } from './../../model/category';
 import { CategoryService } from './../../services/category.service';
 import { OrderService } from './../../services/order.service';
@@ -12,7 +13,7 @@ export class DropMenuComponent implements OnInit {
 
   categories: Category[]=[];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -27,6 +28,10 @@ export class DropMenuComponent implements OnInit {
     )
   }
 
+
+  isAuth(){
+    return this.authenticationService.isLogin();
+  }
 
 
 

@@ -1,6 +1,7 @@
 import { Category } from './../../model/category';
 import { CategoryService } from './../../services/category.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/security/authentication.service';
 
 @Component({
   selector: 'app-category-list',
@@ -11,7 +12,7 @@ export class CategoryListComponent implements OnInit {
 
   categories: Category[]=[];
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -25,6 +26,8 @@ export class CategoryListComponent implements OnInit {
     )
   }
 
-
+  isLogined(){
+    return this.authenticationService.isLogin();
+  }
 
 }
