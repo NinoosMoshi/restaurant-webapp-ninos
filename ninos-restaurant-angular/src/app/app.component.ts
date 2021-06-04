@@ -1,3 +1,4 @@
+import { AuthenticationService } from 'src/app/services/security/authentication.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Component } from '@angular/core';
 
@@ -10,7 +11,7 @@ export class AppComponent {
   title = 'ninos-restaurant-angular';
 
 
-  constructor(private cookie: CookieService){}
+  constructor(private cookie: CookieService,private authenticationService:AuthenticationService){}
 
   ngOnInit(){
    if(this.isCookie()){
@@ -24,6 +25,12 @@ export class AppComponent {
        return false;
     }
     return true;
+  }
+
+
+
+  isLogin(){
+    return this.authenticationService.isLogin();
   }
 
 
