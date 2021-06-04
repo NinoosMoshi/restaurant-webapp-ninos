@@ -38,7 +38,11 @@ export class LoginComponent implements OnInit {
 
 
   login(){
-    this.authenticationService.executeAuthentication(
+      if(this.checkoutParentGroup.invalid){
+        this.checkoutParentGroup.markAllAsTouched();
+        return;
+      }
+      this.authenticationService.executeAuthentication(
       this.checkoutParentGroup.controls['user'].value.email,
       this.checkoutParentGroup.controls['user'].value.password
     ).subscribe({
