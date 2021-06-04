@@ -1,5 +1,6 @@
 package com.ninos.controller;
 
+import com.ninos.dto.AccountResponse;
 import com.ninos.dto.LoginResponse;
 import com.ninos.model.User;
 import com.ninos.service.AuthoritiesService;
@@ -38,13 +39,22 @@ public class UserController {
 
     //http://localhost:8080/signup
     @PostMapping("/signup")
-    public void createUser(@RequestBody JwtLogin jwtLogin){
-        User user = new User();
-        user.setEmail(jwtLogin.getEmail());
-        user.setPassword(passwordEncoder.encode(jwtLogin.getPassword()));
-        user.setActive(1);
-        user.getAuthorities().add(authoritiesService.getAuthorities().get(0));
-        userService.addUser(user);
+    public AccountResponse createUser(@RequestBody JwtLogin jwtLogin){
+        AccountResponse accountResponse = new AccountResponse();
+        boolean result = userService.ifEmailExist(jwtLogin.getEmail());
+        if(result){
+           accountResponse.setResult(0);
+        }else{
+            User user = new User();
+            user.setEmail(jwtLogin.getEmail());
+            user.setPassword(passwordEncoder.encode(jwtLogin.getPassword()));
+            user.setActive(1);
+            user.getAuthorities().add(authoritiesService.getAuthorities().get(0));
+            userService.addUser(user);
+            accountResponse.setResult(1);
+        }
+
+        return accountResponse;
     }
 
 }
