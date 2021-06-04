@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HttpInterceptorBaseAuthService } from './services/security/http-interceptor-base-auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -43,7 +44,8 @@ import { HttpInterceptorBaseAuthService } from './services/security/http-interce
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorBaseAuthService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorBaseAuthService, multi: true},
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
