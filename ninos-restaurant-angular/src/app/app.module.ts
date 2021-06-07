@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HttpInterceptorBaseAuthService } from './services/security/http-interceptor-base-auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { CodeActivationComponent } from './components/code-activation/code-activation.component';
 
 
 
@@ -34,6 +35,7 @@ import { CookieService } from 'ngx-cookie-service';
     PurchasesComponent,
     LoginComponent,
     SignupComponent,
+    CodeActivationComponent,
 
   ],
   imports: [

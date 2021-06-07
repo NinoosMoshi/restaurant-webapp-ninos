@@ -1,3 +1,4 @@
+import { CodeActivationComponent } from './components/code-activation/code-activation.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
@@ -11,6 +12,7 @@ import { LoginActiveService } from './services/activated/login-active.service';
 
 const routes: Routes = [
 
+  {path:'active', component:CodeActivationComponent},
   {path:'login', component:LoginComponent, canActivate:[LoginActiveService]},
   {path:'signup', component:SignupComponent, canActivate:[LoginActiveService]},
   {path:'checkout', component:CheckOutComponent, canActivate:[RouteActiveService]},
