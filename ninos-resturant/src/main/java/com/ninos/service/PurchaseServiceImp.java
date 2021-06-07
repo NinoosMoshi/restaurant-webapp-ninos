@@ -5,22 +5,19 @@ import com.ninos.dto.PurchasesRequest;
 import com.ninos.model.Item;
 import com.ninos.model.RequestOrder;
 import com.ninos.repository.ClientRepository;
-import com.ninos.util.Code;
+import com.ninos.util.UserCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class PurchaseServiceImp implements PurchaseService{
 
     private ClientRepository clientRepository;
 
-    private Code code;
+    private UserCode userCode = new UserCode();
 
     @Autowired
     public PurchaseServiceImp(ClientRepository clientRepository) {
@@ -33,7 +30,7 @@ public class PurchaseServiceImp implements PurchaseService{
 
         RequestOrder requestOrder = purchase.getRequestOrder();
 
-        String myCode = code.getCode();
+        String myCode = userCode.getCode();
         requestOrder.setCode(myCode);
 
 //      requestOrder.setItems(purchase.getItems());

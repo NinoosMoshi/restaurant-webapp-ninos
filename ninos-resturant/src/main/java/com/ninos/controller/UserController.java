@@ -3,12 +3,14 @@ package com.ninos.controller;
 import com.ninos.dto.AccountResponse;
 import com.ninos.dto.LoginResponse;
 import com.ninos.dto.Mail;
+import com.ninos.model.Code;
 import com.ninos.model.User;
 import com.ninos.service.AuthoritiesService;
 import com.ninos.service.EmailService;
 import com.ninos.service.TokenService;
 import com.ninos.dto.JwtLogin;
 import com.ninos.service.UserService;
+import com.ninos.util.UserCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +27,7 @@ public class UserController {
     private AuthoritiesService authoritiesService;
     private PasswordEncoder passwordEncoder;
     private EmailService emailService;
+    UserCode userCode = new UserCode();
 
     @Autowired
     public UserController(TokenService tokenService, UserService userService, AuthoritiesService authoritiesService, PasswordEncoder passwordEncoder, EmailService emailService) {
@@ -49,13 +52,18 @@ public class UserController {
         if(result){
            accountResponse.setResult(0);
         }else{
+            String myCode = userCode.getCode();
             User user = new User();
             user.setEmail(jwtLogin.getEmail());
             user.setPassword(passwordEncoder.encode(jwtLogin.getPassword()));
             user.setActive(0);
             user.getAuthorities().add(authoritiesService.getAuthorities().get(0));
+            Mail mail = new Mail(jwtLogin.getEmail(),myCode);
+            emailService.sendCodeByMail(mail);
+            Code code = new Code();
+            code.setCode(myCode);
+            user.setCode(code);
             userService.addUser(user);
-            emailService.sendCodeByMail(new Mail(jwtLogin.getEmail()));
             accountResponse.setResult(1);
 
         }
