@@ -1,14 +1,11 @@
 package com.ninos.controller;
 
-import com.ninos.dto.AccountResponse;
-import com.ninos.dto.LoginResponse;
-import com.ninos.dto.Mail;
+import com.ninos.dto.*;
 import com.ninos.model.Code;
 import com.ninos.model.User;
 import com.ninos.service.AuthoritiesService;
 import com.ninos.service.EmailService;
 import com.ninos.service.TokenService;
-import com.ninos.dto.JwtLogin;
 import com.ninos.service.UserService;
 import com.ninos.util.UserCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,6 @@ public class UserController {
     private AuthoritiesService authoritiesService;
     private PasswordEncoder passwordEncoder;
     private EmailService emailService;
-    UserCode userCode = new UserCode();
 
     @Autowired
     public UserController(TokenService tokenService, UserService userService, AuthoritiesService authoritiesService, PasswordEncoder passwordEncoder, EmailService emailService) {
@@ -52,7 +48,7 @@ public class UserController {
         if(result){
            accountResponse.setResult(0);
         }else{
-            String myCode = userCode.getCode();
+            String myCode = UserCode.getCode();
             User user = new User();
             user.setEmail(jwtLogin.getEmail());
             user.setPassword(passwordEncoder.encode(jwtLogin.getPassword()));
@@ -65,10 +61,27 @@ public class UserController {
             user.setCode(code);
             userService.addUser(user);
             accountResponse.setResult(1);
-
         }
-
         return accountResponse;
     }
+
+
+    //http://localhost:8080/active
+    @PostMapping("/active")
+    public UserActive getActiveUser(@RequestBody JwtLogin jwtLogin){
+        String enPassword = userService.getPasswordByEmail(jwtLogin.getEmail());
+        boolean result = passwordEncoder.matches(jwtLogin.getPassword(),enPassword);  // jwtLogin.getPassword() is meaning user when enter password, enPassword meaning the password encrypted in database
+        UserActive userActive = new UserActive();
+        if(result){
+           int act = userService.getUserActive(jwtLogin.getEmail());
+           userActive.setActive(act);
+        }else{
+           userActive.setActive(-1); // -1 meaning the password that user entered is not correct
+        }
+       return userActive;
+    }
+
+
+
 
 }

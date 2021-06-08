@@ -1,5 +1,6 @@
 package com.ninos.service;
 
+import com.ninos.dto.JwtLogin;
 import com.ninos.dto.UserPrincipal;
 import com.ninos.model.User;
 import com.ninos.repository.UserRepository;
@@ -36,6 +37,16 @@ public class UserService implements UserDetailsService {
 
     public boolean ifEmailExist(String email){
         return userRepository.existsByEmail(email);
+    }
+
+    @Transactional  // we add @Transactional to manage our session
+    public int getUserActive(String email){
+      return userRepository.getActive(email);
+    }
+
+
+    public String getPasswordByEmail(String email){
+        return userRepository.getPasswordByEmail(email);
     }
 
 

@@ -17,7 +17,6 @@ public class PurchaseServiceImp implements PurchaseService{
 
     private ClientRepository clientRepository;
 
-    private UserCode userCode = new UserCode();
 
     @Autowired
     public PurchaseServiceImp(ClientRepository clientRepository) {
@@ -30,7 +29,7 @@ public class PurchaseServiceImp implements PurchaseService{
 
         RequestOrder requestOrder = purchase.getRequestOrder();
 
-        String myCode = userCode.getCode();
+        String myCode = UserCode.getCode();
         requestOrder.setCode(myCode);
 
 //      requestOrder.setItems(purchase.getItems());

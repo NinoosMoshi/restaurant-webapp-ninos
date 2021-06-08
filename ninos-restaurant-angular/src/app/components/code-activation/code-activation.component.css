@@ -98,3 +98,13 @@ input:focus{
 .mycard{
   height: 210px;
 }
+
+
+.must{
+  font-size: 25px !important;
+}
+
+.email-act{
+  font-size: 18px !important;
+  color: azure;
+}
