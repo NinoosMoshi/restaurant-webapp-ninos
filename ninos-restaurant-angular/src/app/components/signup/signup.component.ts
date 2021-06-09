@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
     ).subscribe({
       next: response =>{
         if(response.result == 1){
-          sessionStorage.setItem("emailAtive",this.checkoutParentGroup.controls['user'].value.email);
+          sessionStorage.setItem("emailActive",this.checkoutParentGroup.controls['user'].value.email);
           this.router.navigateByUrl('/active');
         }else{
           alert("Email is Exist")
