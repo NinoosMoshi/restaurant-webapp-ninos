@@ -18,6 +18,7 @@ public class PurchaseServiceImp implements PurchaseService{
     private ClientRepository clientRepository;
 
 
+
     @Autowired
     public PurchaseServiceImp(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
