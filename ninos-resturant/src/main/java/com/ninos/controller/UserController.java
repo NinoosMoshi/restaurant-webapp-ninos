@@ -81,7 +81,4 @@ public class UserController {
        return userActive;
     }
 
-
-
-
 }
