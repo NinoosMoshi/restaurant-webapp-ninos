@@ -81,4 +81,24 @@ public class UserController {
        return userActive;
     }
 
+
+
+
+    @PostMapping("/activated")
+    public AccountResponse activeAccount(@RequestBody ActiveAccount activeAccount){
+        User user = userService.getUserByMail(activeAccount.getMail());
+        AccountResponse accountResponse = new AccountResponse();
+        if(user.getCode().getCode().equals(activeAccount.getCode())){
+            user.setActive(1);
+            userService.editUser(user);
+            accountResponse.setResult(1);
+        } else {
+            accountResponse.setResult(0);
+        }
+        return accountResponse;
+    }
+
+
+
+
 }
